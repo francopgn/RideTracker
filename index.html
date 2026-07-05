@@ -1276,6 +1276,39 @@ tbody tr:hover{background:var(--card-soft)}
 .splash-cursor.splash-cursor-hide{
   display:none;
 }
+
+/* Tagline con líneas laterales */
+.tagline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  min-height: 40px; /* Para que no se mueva mientras escribe */
+}
+
+.text {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  letter-spacing: .35em;
+  color: var(--muted);
+  text-transform: uppercase;
+  min-width: 280px; /* Ajusta según el largo del texto */
+  text-align: center;
+}
+
+.line {
+  flex: 0 0 60px; /* Ancho fijo de cada línea */
+  height: 1.5px;
+  background: var(--border);
+  transition: background .3s ease;
+}
+
+/* Opcional: si quieres que las líneas se adapten al tema */
+html[data-theme="dark"] .line {
+  background: var(--border);
+}
+   
 @keyframes splashBlink{
   0%,100%{opacity:1}
   50%{opacity:0}
@@ -1294,9 +1327,11 @@ tbody tr:hover{background:var(--card-soft)}
 ═══════════════════════════════════════ -->
 <div id="splashScreen">
   <div class="splash-content">
-    <div class="splash-logo">🚗 RideTracker</div>
-    <div class="splash-tagline">
-      <span id="splashTypewriter"></span><span class="splash-cursor" id="splashCursor">|</span>
+   <img src="assets/splash.png" alt="RideTracker" style="height:80px;width:auto;display:block">
+  <div class="tagline">
+      <span class="line line-left"></span>
+      <span class="text" id="splashTypewriter"></span>
+      <span class="line line-right"></span>
     </div>
   </div>
 </div>
@@ -4675,31 +4710,32 @@ function splashTryHide(){
   setTimeout(()=>{ el.remove(); }, SPLASH_FADE_MS + 50);
 }
 
-function runSplashTypewriter(){
-  const target = $('splashTypewriter');
-  const cursor = $('splashCursor');
-  if(!target){ splashAnimDone = true; splashTryHide(); return; }
+function runSplashTypewriter() {
+  const target = document.getElementById('splashTypewriter');
+  if (!target) { splashAnimDone = true; splashTryHide(); return; }
+  
   let i = 0;
   const startedAt = Date.now();
+  
   const tick = () => {
-    if(i <= SPLASH_TEXT.length){
+    if (i <= SPLASH_TEXT.length) {
       target.textContent = SPLASH_TEXT.slice(0, i);
       i++;
       setTimeout(tick, SPLASH_CHAR_MS);
     } else {
-      setTimeout(()=>{
-        if(cursor) cursor.classList.add('splash-cursor-hide');
-        const elapsed = Date.now() - startedAt;
-        const remaining = Math.max(0, SPLASH_MIN_MS - elapsed - SPLASH_CHAR_MS*SPLASH_TEXT.length);
-        setTimeout(()=>{
-          splashAnimDone = true;
-          splashTryHide();
-        }, remaining);
-      }, SPLASH_HOLD_MS);
+      const elapsed = Date.now() - startedAt;
+      const remaining = Math.max(0, SPLASH_MIN_MS - elapsed - SPLASH_CHAR_MS * SPLASH_TEXT.length);
+      setTimeout(() => {
+        splashAnimDone = true;
+        splashTryHide();
+      }, remaining + SPLASH_HOLD_MS);
     }
   };
+  
   tick();
-  setTimeout(()=>{
+  
+  // Timeout de seguridad por si algo falla
+  setTimeout(() => {
     splashAnimDone = true;
     splashAppReady = true;
     splashTryHide();
