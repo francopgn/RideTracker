@@ -1230,105 +1230,86 @@ tbody tr:hover{background:var(--card-soft)}
   .lj-ingreso{font-size:28px}
 }
 
-/* ════════════════════════════════════════════════════════════
-   SPLASH SCREEN
-════════════════════════════════════════════════════════════ */
-#splashScreen{
-  position:fixed;inset:0;z-index:9999;
-  background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .3s ease, visibility .3s ease;
+/* ===== SPLASH SCREEN ===== */
+#splashScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity .3s ease, visibility .3s ease;
 }
-#splashScreen.splash-hide{
-  opacity:0;visibility:hidden;pointer-events:none;
+#splashScreen.splash-hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
-.splash-content{
-  display:flex;flex-direction:column;align-items:center;gap:18px;
-  animation:splashIn .4s var(--ease) both;
+
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;               /* separación entre logo y tagline */
+  animation: splashIn .4s var(--ease) both;
 }
-@keyframes splashIn{
-  from{opacity:0;transform:scale(.96)}
-  to{opacity:1;transform:scale(1)}
-}
+
 .splash-logo {
-  font-size: min(72px, 18vw);  /* antes era 60px, 16vw */
+  font-size: min(72px, 18vw);
   font-weight: 800;
   color: var(--green);
   letter-spacing: -1px;
   background: var(--card-soft);
-  padding: 14px 32px;           /* más padding para que respire */
+  padding: 14px 32px;
   border-radius: 16px;
   display: inline-block;
   box-shadow: var(--shadow-md);
 }
-.splash-tagline{
-  font-family:var(--mono);
-  font-size:13px;font-weight:600;letter-spacing:.12em;
-  color:var(--muted);
-  min-height:18px;
-  display:flex;align-items:center;
-  text-transform:uppercase;
-}
-.splash-cursor{
-  color:var(--green);
-  margin-left:1px;
-  animation:splashBlink 0.8s step-end infinite;
-}
-.splash-cursor.splash-cursor-hide{
-  display:none;
-}
 
-/* Tagline más compacto */
+/* Tagline con líneas laterales */
 .tagline {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  min-height: 28px;
+  gap: 12px;               /* separación entre líneas y texto */
+  min-height: 24px;
 }
 
-
-/* Texto más pequeño */
 .text {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 13px;        /* reducido */
-  letter-spacing: .2em;   /* menos separación */
+  font-size: 11px;         /* muy pequeño para que quepa en una línea */
+  letter-spacing: .12em;   /* reducido al mínimo */
   color: var(--muted);
   text-transform: uppercase;
-  min-width: 200px;
+  white-space: nowrap;     /* fuerza una sola línea */
   text-align: center;
 }
 
-/* Líneas laterales más gruesas y con degradado visible */
 .line {
-  flex: 0 0 70px;        /* más ancho */
-  height: 4px;           /* más grueso */
-  border-radius: 2px;    /* bordes redondeados */
-  opacity: 1;            /* sin opacidad */
-  transition: background .3s ease;
+  flex: 0 0 50px;          /* ancho fijo */
+  height: 4px;             /* grosor visible */
+  border-radius: 3px;
+  opacity: 1;
 }
 
-/* Línea izquierda: verde brillante a verde oscuro */
+/* Línea izquierda: degradado verde visible */
 .line-left {
   background: linear-gradient(90deg, #56C36E 0%, #2C816C 100%);
-  box-shadow: 0 0 12px rgba(86, 195, 110, 0.3); /* glow sutil */
+  box-shadow: 0 0 16px rgba(86, 195, 110, 0.4);
 }
 
-/* Línea derecha: azul profundo a azul más oscuro */
+/* Línea derecha: degradado azul visible */
 .line-right {
   background: linear-gradient(90deg, #174960 0%, #0F2755 100%);
-  box-shadow: 0 0 12px rgba(23, 73, 96, 0.3); /* glow sutil */
+  box-shadow: 0 0 16px rgba(23, 73, 96, 0.4);
 }
 
-/* Opcional: si quieres que las líneas se adapten al tema */
-html[data-theme="dark"] .line {
-  background: var(--border);
-}
-   
-@keyframes splashBlink{
-  0%,100%{opacity:1}
-  50%{opacity:0}
+/* Animación del splash */
+@keyframes splashIn {
+  from { opacity: 0; transform: scale(.96); }
+  to { opacity: 1; transform: scale(1); }
 }
 @media(prefers-reduced-motion:reduce){
   .splash-content{animation:none}
