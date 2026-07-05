@@ -1278,42 +1278,47 @@ tbody tr:hover{background:var(--card-soft)}
   display:none;
 }
 
-/* Tagline con líneas laterales */
+/* Tagline más compacto */
 .tagline {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;                   /* antes 18px */
-  min-height: 32px;            /* antes 40px */
+  gap: 16px;
+  min-height: 28px;
 }
 
 
+/* Texto más pequeño */
 .text {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 15px;             /* antes 22px */
-  letter-spacing: .25em;       /* antes .35em */
+  font-size: 13px;        /* reducido */
+  letter-spacing: .2em;   /* menos separación */
   color: var(--muted);
   text-transform: uppercase;
-  min-width: 240px;            /* antes 280px */
+  min-width: 200px;
   text-align: center;
 }
 
+/* Líneas laterales más gruesas y con degradado visible */
 .line {
-  flex: 0 0 40px;              /* antes 60px */
-  height: 1.5px;
-  background: var(--border);
+  flex: 0 0 70px;        /* más ancho */
+  height: 4px;           /* más grueso */
+  border-radius: 2px;    /* bordes redondeados */
+  opacity: 1;            /* sin opacidad */
   transition: background .3s ease;
 }
 
-   /* Línea izquierda: verde a verde oscuro */
+/* Línea izquierda: verde brillante a verde oscuro */
 .line-left {
   background: linear-gradient(90deg, #56C36E 0%, #2C816C 100%);
+  box-shadow: 0 0 12px rgba(86, 195, 110, 0.3); /* glow sutil */
 }
 
-/* Línea derecha: azul oscuro a azul más oscuro */
+/* Línea derecha: azul profundo a azul más oscuro */
 .line-right {
   background: linear-gradient(90deg, #174960 0%, #0F2755 100%);
+  box-shadow: 0 0 12px rgba(23, 73, 96, 0.3); /* glow sutil */
 }
 
 /* Opcional: si quieres que las líneas se adapten al tema */
