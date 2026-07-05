@@ -1251,22 +1251,24 @@ tbody tr:hover{background:var(--card-soft)}
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;               /* separación entre logo y tagline */
-  animation: splashIn .4s var(--ease) both;
-     width: 90%;
-  max-width: 600px;  /* o el que prefieras */
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 100% !important;
+  padding: 20px;
 }
 
 .splash-logo {
- font-size: min(130px, 25vw);   /* antes 90px, 22vw */
-  font-weight: 800;
-  color: var(--green);
-  letter-spacing: -1px;
-  background: var(--card-soft);
-  padding: 24px 50px;            /* antes 18px 40px */
-  border-radius: 16px;
-  display: inline-block;
-  box-shadow: var(--shadow-md);
+  font-size: clamp(120px, 25vw, 200px) !important;
+  padding: clamp(20px, 4vw, 50px) clamp(40px, 8vw, 80px) !important;
+  font-weight: 800 !important;
+  color: var(--green) !important;
+  letter-spacing: -2px !important;
+  background: var(--card-soft) !important;
+  border-radius: 20px !important;
+  display: inline-block !important;
+  box-shadow: var(--shadow-md) !important;
+  line-height: 1.2 !important;
 }
 
 /* Tagline con líneas laterales */
