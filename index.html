@@ -22,7 +22,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover"/>
 <meta name="theme-color" content="#F7F8FA" id="themeColorMeta"/>
 <title>RideTracker — Tu compañero de ruta</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/icon.png">
+<link rel="apple-touch-icon" href="assets/icon.png">
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚗</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -1249,16 +1250,16 @@ tbody tr:hover{background:var(--card-soft)}
   from{opacity:0;transform:scale(.96)}
   to{opacity:1;transform:scale(1)}
 }
-.splash-logo{
-  font-size:min(60px, 16vw);
-  font-weight:800;
-  color:var(--green);
-  letter-spacing:-1px;
-  background:var(--card-soft);
-  padding:12px 24px;
-  border-radius:16px;
-  display:inline-block;
-  box-shadow:var(--shadow-md);
+.splash-logo {
+  font-size: min(72px, 18vw);  /* antes era 60px, 16vw */
+  font-weight: 800;
+  color: var(--green);
+  letter-spacing: -1px;
+  background: var(--card-soft);
+  padding: 14px 32px;           /* más padding para que respire */
+  border-radius: 16px;
+  display: inline-block;
+  box-shadow: var(--shadow-md);
 }
 .splash-tagline{
   font-family:var(--mono);
@@ -1282,26 +1283,37 @@ tbody tr:hover{background:var(--card-soft)}
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 18px;
-  min-height: 40px; /* Para que no se mueva mientras escribe */
+  gap: 14px;                   /* antes 18px */
+  min-height: 32px;            /* antes 40px */
 }
+
 
 .text {
   font-family: 'Montserrat', sans-serif;
   font-weight: 500;
-  font-size: 22px;
-  letter-spacing: .35em;
+  font-size: 15px;             /* antes 22px */
+  letter-spacing: .25em;       /* antes .35em */
   color: var(--muted);
   text-transform: uppercase;
-  min-width: 280px; /* Ajusta según el largo del texto */
+  min-width: 240px;            /* antes 280px */
   text-align: center;
 }
 
 .line {
-  flex: 0 0 60px; /* Ancho fijo de cada línea */
+  flex: 0 0 40px;              /* antes 60px */
   height: 1.5px;
   background: var(--border);
   transition: background .3s ease;
+}
+
+   /* Línea izquierda: verde a verde oscuro */
+.line-left {
+  background: linear-gradient(90deg, #56C36E 0%, #2C816C 100%);
+}
+
+/* Línea derecha: azul oscuro a azul más oscuro */
+.line-right {
+  background: linear-gradient(90deg, #174960 0%, #0F2755 100%);
 }
 
 /* Opcional: si quieres que las líneas se adapten al tema */
