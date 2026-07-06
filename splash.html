@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Splash - RideTracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ════════════════════════════════════════════════════════════
+           THEME SYSTEM — Light / Dark via [data-theme] attribute
+        ═════════════════════════════════════════════════════════════ */
+        :root,
+        html[data-theme="light"] {
+            --bg: #F7F8FA;
+            --bg-elev: #FFFFFF;
+            --card: #FFFFFF;
+            --card-soft: #F2F4F7;
+            --border: rgba(17, 24, 39, .08);
+            --border2: rgba(17, 24, 39, .14);
+            --text: #111827;
+            --muted: #6B7280;
+            --dim: #9CA3AF;
+            --green: #10B981;
+            --green-bg: rgba(16, 185, 129, .10);
+            --green-bg2: rgba(16, 185, 129, .16);
+            --blue: #3B82F6;
+            --blue-bg: rgba(59, 130, 246, .10);
+            --yellow: #F59E0B;
+            --yellow-bg: rgba(245, 158, 11, .10);
+            --red: #EF4444;
+            --red-bg: rgba(239, 68, 68, .10);
+            --violet: #7C6FE8;
+            --violet-bg: rgba(124, 111, 232, .10);
+            --shadow-sm: 0 1px 2px rgba(17, 24, 39, .04), 0 1px 3px rgba(17, 24, 39, .06);
+            --shadow-md: 0 4px 14px rgba(17, 24, 39, .06), 0 2px 4px rgba(17, 24, 39, .04);
+            --shadow-lg: 0 20px 48px rgba(17, 24, 39, .10), 0 8px 16px rgba(17, 24, 39, .06);
+            --shadow-hero: 0 24px 60px rgba(16, 185, 129, .18);
+            --scrollbar: rgba(17, 24, 39, .15);
+            color-scheme: light;
+        }
+        html[data-theme="dark"] {
+            --bg: #0E0F13;
+            --bg-elev: #16171D;
+            --card: #1A1B22;
+            --card-soft: #212229;
+            --border: rgba(255, 255, 255, .07);
+            --border2: rgba(255, 255, 255, .12);
+            --text: #EDEDF2;
+            --muted: #8C8D98;
+            --dim: #5B5C68;
+            --green: #2DD4A8;
+            --green-bg: rgba(45, 212, 168, .12);
+            --green-bg2: rgba(45, 212, 168, .18);
+            --blue: #5B9DFF;
+            --blue-bg: rgba(91, 157, 255, .12);
+            --yellow: #FFB84D;
+            --yellow-bg: rgba(255, 184, 77, .12);
+            --red: #FF6B7A;
+            --red-bg: rgba(255, 107, 122, .12);
+            --violet: #9D90FF;
+            --violet-bg: rgba(157, 144, 255, .12);
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, .3);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, .35);
+            --shadow-lg: 0 24px 60px rgba(0, 0, 0, .5);
+            --shadow-hero: 0 24px 60px rgba(45, 212, 168, .14);
+            --scrollbar: rgba(255, 255, 255, .12);
+            color-scheme: dark;
+        }
+        :root {
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', sans-serif;
+            --ease: cubic-bezier(.4, 0, .2, 1);
+            --ease-spring: cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: background .35s var(--ease), color .35s var(--ease);
+        }
+
+        /* ════════════════════════════════════════════════════════════
+           SPLASH SCREEN
+        ════════════════════════════════════════════════════════════ */
+        #splashScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity .3s ease, visibility .3s ease;
+        }
+        #splashScreen.splash-hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .splash-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            width: 100%;
+            max-width: 100% !important;
+            padding: 20px;
+        }
+
+        /* LOGO: imagen aumentada un 50% (antes 80px, ahora 120px) SIN ningún recuadro visible */
+        .splash-logo {
+            display: block;
+            height: 120px;          /* 80px * 1.5 = 120px */
+            width: auto;
+            max-width: 90vw;
+            object-fit: contain;
+            /* Sin fondo, sin padding, sin border-radius, sin sombra */
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+
+        /* Tagline con líneas laterales */
+        .tagline {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-height: 24px;
+        }
+
+        .text {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 11px;
+            letter-spacing: .12em;
+            color: var(--muted);
+            text-transform: uppercase;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .line {
+            flex: 0 0 50px;
+            height: 4px;
+            border-radius: 3px;
+            opacity: 1;
+        }
+        .line-left {
+            background: linear-gradient(90deg, #56C36E 0%, #2C816C 100%);
+            box-shadow: 0 0 16px rgba(86, 195, 110, 0.4);
+        }
+        .line-right {
+            background: linear-gradient(90deg, #174960 0%, #0F2755 100%);
+            box-shadow: 0 0 16px rgba(23, 73, 96, 0.4);
+        }
+
+        /* Animación de entrada */
+        @keyframes splashIn {
+            from {
+                opacity: 0;
+                transform: scale(.96);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .splash-content {
+            animation: splashIn .5s var(--ease-spring) both;
+        }
+
+        /* Botón para cerrar (opcional) */
+        .close-splash-btn {
+            margin-top: 20px;
+            padding: 10px 30px;
+            border-radius: 40px;
+            background: var(--green);
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 16px var(--green-bg2);
+            transition: transform .15s var(--ease-spring), box-shadow .15s;
+            font-family: var(--sans);
+        }
+        .close-splash-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px var(--green-bg2);
+        }
+        .close-splash-btn:active {
+            transform: scale(.96);
+        }
+
+        @media(max-width: 480px) {
+            .splash-logo {
+                height: 72px !important;
+            }
+            .line {
+                flex: 0 0 30px;
+            }
+            .tagline {
+                gap: 6px;
+            }
+        }
+        @media(prefers-reduced-motion: reduce) {
+            .splash-content {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════
+         SPLASH SCREEN
+    ═══════════════════════════════════════ -->
+    <div id="splashScreen">
+        <div class="splash-content">
+            <!-- Logo: imagen desde assets/logo.png, aumentada un 50% (height: 120px), sin recuadro -->
+            <img src="assets/logo.png" alt="RideTracker" class="splash-logo">
+
+            <!-- Tagline con animación de escritura -->
+            <div class="tagline">
+                <span class="line line-left"></span>
+                <span class="text" id="splashTypewriter"></span>
+                <span class="line line-right"></span>
+            </div>
+
+            <!-- Botón para cerrar el splash (opcional) -->
+            <button class="close-splash-btn" onclick="hideSplash()">Continuar →</button>
+        </div>
+    </div>
+
+    <script>
+        /* ═══════════════════════════════════════
+           SPLASH TYPEWRITER + AUTO‑HIDE
+        ═══════════════════════════════════════ */
+        const SPLASH_TEXT = 'CADA KILÓMETRO CUENTA';
+        const SPLASH_CHAR_MS = 42;
+        const SPLASH_HOLD_MS = 400;
+        const SPLASH_FADE_MS = 300;
+        const SPLASH_MIN_MS = 1000;
+        const SPLASH_MAX_MS = 1500;
+
+        let splashHidden = false;
+
+        function hideSplash() {
+            if (splashHidden) return;
+            splashHidden = true;
+            const el = document.getElementById('splashScreen');
+            if (!el) return;
+            el.classList.add('splash-hide');
+            // Opcional: eliminar del DOM después de la transición
+            setTimeout(() => { el.remove(); }, SPLASH_FADE_MS + 50);
+        }
+
+        function runSplashTypewriter() {
+            const target = document.getElementById('splashTypewriter');
+            if (!target) { hideSplash(); return; }
+
+            let i = 0;
+            const startedAt = Date.now();
+
+            const tick = () => {
+                if (i <= SPLASH_TEXT.length) {
+                    target.textContent = SPLASH_TEXT.slice(0, i);
+                    i++;
+                    setTimeout(tick, SPLASH_CHAR_MS);
+                } else {
+                    const elapsed = Date.now() - startedAt;
+                    const remaining = Math.max(0, SPLASH_MIN_MS - elapsed - SPLASH_CHAR_MS * SPLASH_TEXT.length);
+                    setTimeout(() => {
+                        // Ocultar automáticamente después de 1.5 segundos adicionales si no se ha hecho clic
+                        setTimeout(() => {
+                            if (!splashHidden) hideSplash();
+                        }, 1500);
+                    }, remaining + SPLASH_HOLD_MS);
+                }
+            };
+
+            tick();
+
+            // Timeout de seguridad por si algo falla
+            setTimeout(() => {
+                if (!splashHidden) hideSplash();
+            }, SPLASH_MAX_MS + 2000);
+        }
+
+        // Iniciar cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', runSplashTypewriter);
+        // Si el DOM ya está cargado, ejecutar ahora
+        if (document.readyState === 'complete' || document.readyState === 'interactive') {
+            runSplashTypewriter();
+        }
+
+        // Cerrar con clic en cualquier parte (excepto el botón para no duplicar)
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.close-splash-btn')) return;
+            if (!splashHidden) hideSplash();
+        });
+    </script>
+
+</body>
+</html>
