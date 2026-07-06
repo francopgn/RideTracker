@@ -124,14 +124,13 @@
             padding: 20px;
         }
 
-        /* LOGO: imagen aumentada al doble (160px de alto) para que se vea grande */
+        /* LOGO: aumentado al triple (80px * 3 = 240px) SIN recuadro */
         .splash-logo {
             display: block;
-            height: 160px;          /* bastante más grande que antes */
+            height: 240px;          /* triple del original 80px */
             width: auto;
-            max-width: 85vw;        /* para que no se desborde en pantallas pequeñas */
+            max-width: 85vw;
             object-fit: contain;
-            /* Sin ningún recuadro visible */
             background: transparent;
             padding: 0;
             border-radius: 0;
@@ -177,7 +176,7 @@
         @keyframes splashIn {
             from {
                 opacity: 0;
-                transform: scale(.96);
+                transform: scale(.92);
             }
             to {
                 opacity: 1;
@@ -188,32 +187,10 @@
             animation: splashIn .5s var(--ease-spring) both;
         }
 
-        /* Botón para cerrar (opcional) */
-        .close-splash-btn {
-            margin-top: 20px;
-            padding: 10px 30px;
-            border-radius: 40px;
-            background: var(--green);
-            color: #fff;
-            font-weight: 700;
-            font-size: 14px;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 16px var(--green-bg2);
-            transition: transform .15s var(--ease-spring), box-shadow .15s;
-            font-family: var(--sans);
-        }
-        .close-splash-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px var(--green-bg2);
-        }
-        .close-splash-btn:active {
-            transform: scale(.96);
-        }
-
+        /* Ajustes para móviles: triple también (aprox 48px * 3 = 144px) */
         @media(max-width: 480px) {
             .splash-logo {
-                height: 100px !important;  /* más grande en móvil también */
+                height: 144px !important;
             }
             .line {
                 flex: 0 0 30px;
@@ -236,8 +213,8 @@
     ═══════════════════════════════════════ -->
     <div id="splashScreen">
         <div class="splash-content">
-            <!-- Logo: imagen desde assets/logo.png, ahora mucho más grande (160px de alto) y sin recuadro -->
-            <img src="assets/splash.png" alt="RideTracker" class="splash-logo">
+            <!-- Logo: aumentado al triple (240px de alto), sin recuadro -->
+            <img src="assets/logo.png" alt="RideTracker" class="splash-logo">
 
             <!-- Tagline con animación de escritura -->
             <div class="tagline">
@@ -245,9 +222,6 @@
                 <span class="text" id="splashTypewriter"></span>
                 <span class="line line-right"></span>
             </div>
-
-            <!-- Botón para cerrar el splash (opcional) -->
-            <button class="close-splash-btn" onclick="hideSplash()">Continuar →</button>
         </div>
     </div>
 
@@ -260,7 +234,7 @@
         const SPLASH_HOLD_MS = 400;
         const SPLASH_FADE_MS = 300;
         const SPLASH_MIN_MS = 1000;
-        const SPLASH_MAX_MS = 1500;
+        const SPLASH_MAX_MS = 1800; /* un poco más para que se vea bien */
 
         let splashHidden = false;
 
@@ -270,7 +244,6 @@
             const el = document.getElementById('splashScreen');
             if (!el) return;
             el.classList.add('splash-hide');
-            // Opcional: eliminar del DOM después de la transición
             setTimeout(() => { el.remove(); }, SPLASH_FADE_MS + 50);
         }
 
@@ -290,32 +263,30 @@
                     const elapsed = Date.now() - startedAt;
                     const remaining = Math.max(0, SPLASH_MIN_MS - elapsed - SPLASH_CHAR_MS * SPLASH_TEXT.length);
                     setTimeout(() => {
-                        // Ocultar automáticamente después de 1.5 segundos adicionales si no se ha hecho clic
+                        // Auto‑ocultar después de 1.8 segundos adicionales
                         setTimeout(() => {
                             if (!splashHidden) hideSplash();
-                        }, 1500);
+                        }, 1800);
                     }, remaining + SPLASH_HOLD_MS);
                 }
             };
 
             tick();
 
-            // Timeout de seguridad por si algo falla
+            // Timeout de seguridad
             setTimeout(() => {
                 if (!splashHidden) hideSplash();
             }, SPLASH_MAX_MS + 2000);
         }
 
-        // Iniciar cuando el DOM esté listo
+        // Iniciar
         document.addEventListener('DOMContentLoaded', runSplashTypewriter);
-        // Si el DOM ya está cargado, ejecutar ahora
         if (document.readyState === 'complete' || document.readyState === 'interactive') {
             runSplashTypewriter();
         }
 
-        // Cerrar con clic en cualquier parte (excepto el botón para no duplicar)
+        // También se puede cerrar con clic en cualquier parte (sin botón, para más limpieza)
         document.addEventListener('click', function(e) {
-            if (e.target.closest('.close-splash-btn')) return;
             if (!splashHidden) hideSplash();
         });
     </script>
